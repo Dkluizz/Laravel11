@@ -54,8 +54,22 @@ class CartController extends Controller
 
     public function clear()
     {
-
+        $cartItems = Cart::where('id_user', Auth::user()->id)->get();
+    
+        foreach ($cartItems as $cartItem) {
+            $product = Product::findOrFail($cartItem->product_id);
+    
+            $product->quantity -= $cartItem->quantity;
+    
+            if ($product->quantity < 0) {
+                $product->quantity = 0;
+            }
+    
+            $product->save();
+        }
+    
         Cart::where('id_user', Auth::user()->id)->delete();
+    
         return redirect(route('cart.index'))->with('mensagem', 'Compra realizada com sucesso');
     }
 
