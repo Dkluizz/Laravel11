@@ -26,6 +26,9 @@ Rodar as migrations
 ```sh
 php artisan migrate
 ```
+```sh
+php artisan db:seed
+```
 Executar node
 ```sh
 npm install
