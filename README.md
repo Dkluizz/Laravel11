@@ -1,52 +1,38 @@
 
-# Projeto Laravel 11
-# Setup Docker Laravel 11 com PHP 8.3
-[Assine a Academy, e Seja VIP!](https://academy.especializati.com.br)
-
 ### Passo a passo
-Clone Repositório
-```sh
-git clone -b laravel-11-with-php-8.3 https://github.com/especializati/setup-docker-laravel.git app-laravel
-```
-```sh
-cd app-laravel
-```
+Necessário Docker instalado, nodeJs
 
 Suba os containers do projeto
 ```sh
 docker-compose up -d
 ```
-
-
 Crie o Arquivo .env
 ```sh
 cp .env.example .env
 ```
-
 Acesse o container app
 ```sh
 docker-compose exec app bash
 ```
-
-
 Instale as dependências do projeto
 ```sh
 composer install
 ```
-
 Gere a key do projeto Laravel
 ```sh
 php artisan key:generate
 ```
-
-OPCIONAL: Gere o banco SQLite (caso não use o banco MySQL)
-```sh
-touch database/database.sqlite
-```
-
 Rodar as migrations
 ```sh
 php artisan migrate
+```
+Executar node
+```sh
+npm install
+npm run build
+```
+```sh
+npm run dev
 ```
 
 Acesse o projeto
