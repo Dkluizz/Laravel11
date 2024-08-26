@@ -7,15 +7,12 @@
         </div>
     @endif
 
-    @if ($errors->any())
+    @if (session('error'))
         <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+            {{ session('error') }}
         </div>
     @endif
+
 
     <form action="{{ route('categories.store') }}" method="POST" enctype="multipart/form-data"
         class='col-md-6 offset-md-3 mt-5 shadow-lg p-3 mb-5 bg-white rounded'>
@@ -67,5 +64,4 @@
 
 
     </div>
-
 @endsection

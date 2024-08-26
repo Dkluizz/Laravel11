@@ -7,15 +7,12 @@
     </div>
 @endif
 
-@if ($errors->any())
+@if (session('error'))
     <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+        {{ session('error') }}
     </div>
 @endif
+
     <div class="container text-white my-5 d-flex justify-content-around">
         <div class="row mx-2">
             <form action="{{route('products.store')}}" method="POST" enctype="multipart/form-data" class=" col-md  ">

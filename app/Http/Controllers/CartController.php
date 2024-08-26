@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Product;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -52,9 +53,24 @@ class CartController extends Controller
     }
 
 
-    public function clear()
+    public function clear(Request $request)
     {
         $cartItems = Cart::where('id_user', Auth::user()->id)->get();
+        if ($cartItems->isEmpty()) {
+            return redirect()->back()->with('error', 'Carrinho Vazio');
+        }
+        $request->validate([
+            'adress' => 'required',
+            'zip' => 'required',
+            'city' => 'required',
+            'state' => 'required',
+        ], [
+            'adress.required' => 'O campo endereço é obrigatório.',
+            'zip.required' => 'O campo CEP é obrigatório.',
+            'city.required' => 'O campo cidade é obrigatório.',
+            'state.required' => 'O campo estado é obrigatório.',
+        ]);
+        
     
         foreach ($cartItems as $cartItem) {
             $product = Product::findOrFail($cartItem->product_id);
@@ -70,7 +86,7 @@ class CartController extends Controller
     
         Cart::where('id_user', Auth::user()->id)->delete();
     
-        return redirect(route('cart.index'))->with('mensagem', 'Compra realizada com sucesso');
+        return redirect()->back()->with('success', 'Compra realizada com sucesso');
     }
 
     public function update(Request $request, $cartId)
