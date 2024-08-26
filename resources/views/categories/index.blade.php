@@ -2,16 +2,31 @@
 @extends('layouts.layout')
 
 @section('content')
-<div class=" container-{breakpoint} ms-3">
+@if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+<div class=" container-{breakpoint} ms-3"  style="margin-top: 7rem !important">
   <div class="row mb-3 mt-3 ">
       <div class=" col-md-3 col-sm-10 col-10 justify-content-evenly">
         <div class="list-group mx-2">
-          <h4>
+          <h6>
             <a class="text-decoration-none list-group-item" href="{{route('categories.index')}}">Todos</a>
             @foreach($catlist as $cat)
-              <a class="text-decoration-none list-group-item" href="{{route('categories.index', ['id_category'=>$cat->id])}}">{{$cat->name}}</a>
+              <a class="text-decoration-none list-group-item" href="{{route('categories.index', ['id_category'=>$cat->id])}}"> <img src="{{url($cat->icon)}}" style="width: 30px; height: 30px" alt=""> {{$cat->name}}</a>
             @endforeach
-          </h4>
+          </h6>
         </div>
       </div>    
   
@@ -23,7 +38,7 @@
             <div class="card-body opacity-75">
               <h5 class="card-title">{{$prod->name}}</h5>
               <p class="card-text">R$ {{$prod->value}}</p>
-              <div class="text-center d-grid gap-2 d-md-block">
+              <div class="text-center d-flex gap-5">
               <form action="{{route('cart.store')}}" method="POST">
                   @csrf
                   <button type="submit" class="btn btn-outline-primary">Comprar </button>

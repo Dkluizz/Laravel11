@@ -11,5 +11,5 @@ class Cart extends Model
 
     protected $primaryKey = "id";
     protected $table = "Cart";
-    protected $fillable = ["name", "value", "photo", "description", "amount", "dt_item", "product_id", "id_user"];
+    protected $fillable = ["name", "value", "photo", "description", "quantity", "amount", "dt_item", "product_id", "id_user"];
 }

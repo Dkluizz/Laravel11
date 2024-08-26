@@ -4,13 +4,12 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\Category;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Home;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/',  [Home::class,'index'])->name('home');
 
 Route::resource('users', UserController::class)->middleware('auth');
 
@@ -26,10 +25,6 @@ Route::resource('/cart', CartController::class,['except'=> ['edit', 'show']])->m
 
 Route::delete('/cart', [CartController::class, 'clear'])->name('cart.clear');
 
-
-Route::get('/index', function () {
-    return view('home');
-})->middleware(['auth', 'verified'])->name('index');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

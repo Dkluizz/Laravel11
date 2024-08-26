@@ -12,7 +12,7 @@ class Product extends Model
 
     protected $primaryKey = "id";
     public $incrementing = true;
-    protected $fillable = ["name","value","photo","description","id_category"];
+    protected $fillable = ["name","value","photo","description","quantity","id_category"];
     protected $guarded=[];
    
     public function category(): BelongsTo

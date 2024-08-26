@@ -34,51 +34,71 @@ class CategoryController extends Controller
 
     public function create()
     {
+        $this->authorize('is_admin');
         $listCat = Category::all();
         return view('categories.create',compact('listCat'));
     }
 
     public function store(Request $request)
     {
+        $this->authorize('is_admin');
         $request->validate([
             'name' => 'required',
-            'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'description' => 'required',
+            'icon' => 'required|image|max:2048',
         ]);
-        if ($request->has('photo') && $request->photo->isValid()) {
-
-            $nameImage = $request->file('photo')->getClientOriginalName();
-
-            Storage::put("/public/images/produtos/{$nameImage}", file_get_contents($request->photo));
-
-            $data['photo'] = "/storage/images/produtos/{$nameImage}";
+    
+        $data = $request->only(['name', 'description']);
+    
+        if ($request->hasFile('icon')) {
+            $nameImage = time() . '_' . $request->file('icon')->getClientOriginalName();
+        
+            $path = $request->file('icon')->storeAs('images/iconCategory', $nameImage, 'public');
+    
+            $data['icon'] = "/storage/$path";
         }
-
-
-        Category::create($request->all());
-        return redirect('/categories');
-    }       
+    
+        Category::create($data);
+    
+        return redirect()->route('categories.create')->with('success', 'Categoria criada com sucesso!');
+    }
+    
 
     public function edit(Category $category)
     {
-        $data = [];
+        $this->authorize('is_admin');
         $listCat = Category::all();
-        $data['list'] = $listCat;
-        $data['cat'] = $category;
-        return view('categories.edit', $data);
+        $cat = Category::find($category->id);
+        return view('categories.edit', compact('listCat', 'cat'));
     }       
 
     public function update(Request $request, Category $category)
     {
+        $this->authorize('is_admin');
         $request->validate([
             'name' => 'required',
+            'description' => 'required',
+            'icon' => 'sometimes|image|max:2048',
         ]);
-        $category->update($request->all());
-        return redirect('/categories.create');
+    
+        $data = $request->only(['name', 'description']);
+    
+        if ($request->hasFile('icon')) {
+            $nameImage = time() . '_' . $request->file('icon')->getClientOriginalName();
+        
+            $path = $request->file('icon')->storeAs('images/iconCategory', $nameImage, 'public');
+    
+            $data['icon'] = "/storage/$path";
+        }
+
+        Category::find($category->id)->update($data); 
+        return  redirect()->route('categories.create');
     }       
 
     public function destroy(Category $category)
     {
+        $this->authorize('is_admin');
         $category->delete();
-        return redirect('/categories.delete');
+        return redirect()->route('categories.create');
     }       
 }

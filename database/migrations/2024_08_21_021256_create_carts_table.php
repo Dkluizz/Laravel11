@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('carts', function (Blueprint $table) {
+        Schema::create('cart', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 100);
             $table->string('photo', 150)->nullable();
             $table->decimal('value', 10,2)->default(0);
             $table->string('description', 200)->nullable();
-            $table->integer('quantity');
+            $table->integer('quantity')->default(1);
             $table->unsignedInteger('product_id');
             $table->unsignedInteger('id_user');
         

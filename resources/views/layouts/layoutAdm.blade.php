@@ -12,17 +12,18 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
 
     <title>LuckyShopp</title>
+    <link rel="shortcut icon" href="{{ url('/assets/images/favicon.png') }}" type="image/x-icon" />
 </head>
 
-<body>
+<body style="background-image: url('/assets/images/bg-s.jpg'); background-size: cover">
     <div>
         <nav class="navbar navbar-expand-lg bg-light px-1 ">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#"></a>
+                <a class="navbar-brand" href="{{ route('users.index') }}"><img src="{{ url('/assets/images/logo.png') }}"
+                        class="img-fluid" alt="LuckyShopp"></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -34,7 +35,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link active" href="{{route('index')}}">Pagina Inicial</a>
+                            <a class="nav-link active" href="{{route('home')}}">Pagina Inicial</a>
                         </li>
 
                     </ul>
