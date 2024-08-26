@@ -29,6 +29,10 @@ php artisan migrate
 ```sh
 php artisan db:seed
 ```
+Usuário adm :
+email = admin@dkluizz.com
+password = admin123456
+
 Executar node
 ```sh
 npm install
